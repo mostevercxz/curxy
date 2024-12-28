@@ -19,14 +19,14 @@ const argv = cli({
     endpoint: {
       type: validateURL,
       alias: "e",
-      default: "http://localhost:11434",
+      default: "http://localhost:3003",
       description: "The endpoint to Ollama server.",
     },
 
     openaiEndpoint: {
       type: validateURL,
       alias: "o",
-      default: "https://api.openai.com",
+      default: "http://localhost:3003",
       description: "The endpoint to OpenAI server.",
     },
 

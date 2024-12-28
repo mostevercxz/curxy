@@ -1,5 +1,8 @@
 # curxy
 
+curl -fsSL https://deno.land/install.sh > install.sh
+./install.sh
+
 #### _cursor_ + _proxy_ = **curxy**
 
 [![JSR](https://jsr.io/badges/@ryoppippi/curxy)](https://jsr.io/@ryoppippi/curxy)
