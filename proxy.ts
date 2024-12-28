@@ -17,6 +17,12 @@ export function createApp(
 ) {
   const app = new Hono();
 
+  // Add logging middleware for all requests
+  app.use(async (c, next) => {
+    console.log(`[${new Date().toISOString()}] ${c.req.method} ${c.req.url}`);
+    return next();
+  });
+
   // Apply bearer authentication, but skip it for OPTIONS requests
   app.use((c, next) => {
     if (c.req.method !== "OPTIONS") {
@@ -33,6 +39,12 @@ export function createApp(
     const json = await c.req.raw.clone().json();
     const { model } = json;
 
+    // Log the entire JSON body
+    console.log(`[${new Date().toISOString()}] Request body:`, JSON.stringify(json, null, 2));
+
+    // Log the model being requested
+    console.log(`[${new Date().toISOString()}] Requesting model: ${model}`);
+
     // Validate the request payload
     assert(json, is.ObjectOf({ model: is.String }));
 
@@ -41,6 +53,9 @@ export function createApp(
       ollamaEndpoint,
       openAIEndpoint,
     });
+    
+    // Log the chosen endpoint
+    console.log(`[${new Date().toISOString()}] Forwarding to endpoint: ${endpoint}`);
 
     const url = convertToCustomEndpoint(c.req.url, parseURL(endpoint));
     const req = new Request(url, c.req.raw);
